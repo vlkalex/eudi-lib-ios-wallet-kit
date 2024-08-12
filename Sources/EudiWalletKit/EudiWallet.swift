@@ -153,7 +153,7 @@ public final class EudiWallet: ObservableObject {
 	///   - format: Optional format type. Defaults to cbor
 	///   - promptMessage: Prompt message for biometric authentication (optional)
 	/// - Returns: The document issued. It is saved in storage.
-	@discardableResult public func issueDocument(docType: String, format: DataFormat = .cbor, promptMessage: String? = nil) async throws -> WalletStorage.Document {
+	@discardableResult public func issueDocument(docType: String?, format: DataFormat = .cbor, promptMessage: String? = nil) async throws -> WalletStorage.Document {
 		let (issueReq, openId4VCIService, id) = try await prepareIssuing(docType: docType, promptMessage: promptMessage)
 		let data = try await openId4VCIService.issueDocument(docType: docType, format: format, useSecureEnclave: useSecureEnclave)
 		return try await finalizeIssuing(id: id, data: data, docType: docType, format: format, issueReq: issueReq, openId4VCIService: openId4VCIService)
